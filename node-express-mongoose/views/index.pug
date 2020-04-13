@@ -1,0 +1,31 @@
+html(lang="en").the-class
+  head
+    title Hello, world!
+
+    style.
+      html, body {
+        padding: 1em;
+        margin: 0;
+      }
+
+  body
+
+    h1= viewTitle
+    div This is a quick test.
+
+    ol
+      each theItem in items
+        li= theItem
+
+    form(method="POST", action="/user")
+      div
+        input(name="username", placeholder="Enter username", type="text")
+      div
+        input(name="password", placeholder="Enter password", type="password")
+      div
+        input(name="name", placeholder="Enter name", type="text")
+      div
+        input(name="email", placeholder="Enter email", type="email")
+      div
+        textarea(name="bio", placeholder="Enter a basic bio", rows="3")
+      button(type="submit") Create Account

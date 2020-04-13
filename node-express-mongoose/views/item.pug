@@ -1,0 +1,19 @@
+html(lang="en").the-class
+  head
+    title The View Page
+
+    style.
+      html, body {
+        padding: 1em;
+        margin: 0;
+      }
+
+  body
+    div
+      p= user.name
+      div(style="font-size: 0.8em;")
+        span(style="margin-right: 8px;")= user.username
+        span= user.email
+      p= user.bio
+
+      p UserID: #{user.id}
