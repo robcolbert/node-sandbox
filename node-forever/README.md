@@ -28,7 +28,7 @@ Here is what's different between those two commands:
 1. `forever ...` will run the process in the foreground until you press Ctrl+C to quit.
 1. A different options file is started which contains extra options to configure watch mode.
 
-## ./forever/webapp.json
+## [forever/webapp.json](./forever/webapp.json)
 
 ```json
 {
@@ -38,7 +38,7 @@ Here is what's different between those two commands:
 
 There are many other options available (read the `forever` docs). This simply sets the name of the script to run, and that is what forever does. It runs the script. Forever. Even if it exits, crashes, etc. It will re-start it...forever.
 
-## ./forever/webapp.develop.json
+## [forever/webapp.develop.json](./forever/webapp.develop.json)
 
 ```json
 {
