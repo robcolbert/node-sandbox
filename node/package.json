@@ -1,0 +1,12 @@
+{
+  "name": "node-basic",
+  "version": "1.0.0",
+  "description": "An absolute hello world Node.js program.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Rob Colbert",
+  "license": "MIT",
+  "private": true
+}
