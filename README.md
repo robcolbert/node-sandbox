@@ -2,7 +2,7 @@
 
 A collection of projects to explain [Node.js](https://nodejs.org/), [Mongoose](https://mongoosejs.com/), and other technologies to those who are learning to use them for the first time.
 
-## [node-express-mongoose](node-express-mongoose/README.md)
+## [node-express-mongoose](node-express-mongoose/)
 
 This project shows how to:
 
