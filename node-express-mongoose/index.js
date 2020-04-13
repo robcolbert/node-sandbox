@@ -7,7 +7,7 @@ const crypto = require('crypto');
 
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/dbdemo-zack', ( ) => {
+mongoose.connect('mongodb://localhost/dbdemo', ( ) => {
   const Schema = mongoose.Schema;
 
   const UserSchema = new Schema({
@@ -27,56 +27,47 @@ mongoose.connect('mongodb://localhost/dbdemo-zack', ( ) => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
 
-  app.param('userId', (req, res, next, userId) => {
-    res.locals.user = {
-      id: userId,
-      username: 'acolbert',
-      name: 'Zack',
-      email: 'zcolbert416@gmail.com',
-      bio: 'I play games and stuff. Because.'
-    };
+  app.param('userId', async (req, res, next, userId) => {
+    let user = await User.findById(userId);
+    if (!user) {
+      let error = new Error('User not found.');
+      error.code = 404;
+      return next(error);
+    }
+    res.locals.user = user;
     return next();
   });
 
   app.post('/user', (req, res, next) => {
-    console.log(req.body);
-
     let hash = crypto.createHash('sha256');
+    if (process.env.WEBAPP_PASSWORD_SALT) {
+      hash.update(process.env.WEBAPP_PASSWORD_SALT);
+    }
     hash.update(req.body.password);
-    req.body.password = hash.digest('base64');
+    req.body.password = hash.digest('hex');
 
-    User
-    .create(req.body)
-    .then((user) => {
-      res.status(200).json({ user: user });
-    })
-    .catch((error) => {
-      console.log('that fai0led', error);
+    let user;
+    try {
+      user = await User.create(req.body);
+    } catch(error) {
       return next(error);
-    });
+    }
+    res.redirect(`/user/${user._id}`);
   });
 
   app.get('/user/:userId/profile', (req, res) => {
-    res.render('item');
+    res.render('user/profile');
   });
 
   app.get('/user/:userId/inbox', (req, res) => {
-    res.render('item');
+    res.render('user/inbox');
   });
 
   app.get('/user/:userId/notifications', (req, res) => {
-    res.render('item');
+    res.render('user/notifications');
   });
 
-
   app.get('/', function (req, res) {
-    res.locals.items = [
-      'One',
-      'Two',
-      'Green',
-      'Trees'
-    ];
-    res.locals.viewTitle = 'Sample title';
     res.render('index');
   });
 
