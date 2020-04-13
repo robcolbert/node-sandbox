@@ -1,0 +1,16 @@
+{
+  "name": "node-forever",
+  "version": "1.0.0",
+  "description": "Shows how to run your node script using `forever`",
+  "main": "index.js",
+  "scripts": {
+    "start": "forever start ./forever/webapp.json",
+    "develop": "forever ./forever/webapp.develop.json"
+  },
+  "author": "Rob Colbert",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

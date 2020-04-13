@@ -1,0 +1,6 @@
+{
+  "script": "index.js",
+  "watch": true,
+  "watchDirectory": "/home/rob/projects/sandbox/node-sandbox/node-forever",
+  "sourceDir": "/home/rob/projects/sandbox/node-sandbox/node-forever"
+}
