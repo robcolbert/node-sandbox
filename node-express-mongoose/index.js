@@ -1,13 +1,27 @@
 'use strict';
 
 const path = require('path');
+
+const dotenv = require('dotenv');
+dotenv.config(path.join(__dirname, '.env.local'));
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
 
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/dbdemo', ( ) => {
+const mongooseOptions = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+};
+
+mongoose.connect('mongodb://localhost/dbdemo', mongooseOptions, (err) => {
+  if (err) {
+    console.log('error connecting to MongoDB', error);
+    process.exit(-1);
+  }
+
   const Schema = mongoose.Schema;
 
   const UserSchema = new Schema({
@@ -38,7 +52,7 @@ mongoose.connect('mongodb://localhost/dbdemo', ( ) => {
     return next();
   });
 
-  app.post('/user', (req, res, next) => {
+  app.post('/user', async (req, res, next) => {
     let hash = crypto.createHash('sha256');
     if (process.env.WEBAPP_PASSWORD_SALT) {
       hash.update(process.env.WEBAPP_PASSWORD_SALT);
@@ -55,21 +69,27 @@ mongoose.connect('mongodb://localhost/dbdemo', ( ) => {
     res.redirect(`/user/${user._id}`);
   });
 
-  app.get('/user/:userId/profile', (req, res) => {
+  app.get('/user/:userId/profile', async (req, res) => {
     res.render('user/profile');
   });
 
-  app.get('/user/:userId/inbox', (req, res) => {
+  app.get('/user/:userId/inbox', async (req, res) => {
     res.render('user/inbox');
   });
 
-  app.get('/user/:userId/notifications', (req, res) => {
+  app.get('/user/:userId/notifications', async (req, res) => {
     res.render('user/notifications');
   });
 
-  app.get('/', function (req, res) {
+  app.get('/', async (req, res) => {
     res.render('index');
   });
 
-  app.listen(3000);
+  app.listen(process.env.WEBAPP_BIND_ADDRESS, process.env.WEBAPP_BIND_PORT, (err) => {
+    if (err) {
+      console.log('failed to start ExpressJS', error);
+      process.exit(-1);
+    }
+    console.log('mongobox ready to play with frens.');
+  });
 });
