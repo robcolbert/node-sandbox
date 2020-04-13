@@ -1,6 +1,6 @@
 # node-nodemon
 
-An extremely basic demonstration of using [nodemon]() to monitor your project files for changes and re-load your Node.js server when they do.
+An extremely basic demonstration of using [nodemon](https://nodemon.io/) to monitor your project files for changes and re-load your Node.js server when they do.
 
 This is very useful when working on your server scripts. As you save your files, your server will automatically restart for you.
 
